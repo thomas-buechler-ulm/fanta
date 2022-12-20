@@ -1,0 +1,979 @@
+<html lang="de">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>FANTA</title>
+	</head>
+	
+	<style>
+		.grid3 {
+		  display: grid;
+		  grid-template-columns: 45% min-content 45%;
+		  grid-gap: 0em;
+		  grid-auto-flow: row;
+		  justify-content: center;
+		  align-content: center;
+		}
+		.grid3a{
+		text-align: right;
+		}
+		.grid3b{
+		text-align: center;
+		}
+		.grid3c{
+		text-align: left;
+		}
+		.teams {
+		  font-family: "Helvetica", sans-serif ;
+		  font-weight: 700;
+		  font-size: 50px;
+		}
+		.stand{
+		  font-family: "Roboto Mono", monospace;
+		  font-weight: 700;
+		  font-size: 200px;
+		  color: #056300;
+		  cursor: default;
+		}
+		.zeit {
+		  font-family: "Roboto Mono", monospace;
+		  font-weight: 700;
+		  font-size: 200px;
+		  text-align: center;
+		  color: #0000bb;
+		}
+		.strafzeit{
+		  font-family: "Roboto Mono", monospace;
+		  font-weight: 700;
+		  font-size: 100px;
+		  color: #737373;
+		}
+		.halt{
+			visibility: visible;
+		}
+		.bigger{
+			font-size: 40px;
+			height: 70px;
+			width: 70px;
+			text-align: center;
+			line-height: 70px;
+		}
+		button {
+			font-family: "Roboto Mono", monospace;
+			font-size: 20px;
+			font-weight: 700;
+			text-align: center;
+			cursor: pointer;
+			height: 40px;
+			width: 40px;
+			border-radius:50%;
+			border: 2px solid;
+ 			background-color: #bababa;
+ 			
+		}
+		button:hover {background: #ffe869}
+		
+		.but_group{
+			border-radius:5%;
+			border: 0px solid;
+		
+		
+		
+		}
+		
+		.overlay {
+			position: fixed; /* Sit on top of the page content */
+			display: ; /* Hidden by default */
+			width: 100%%; /* Full width (cover the whole page) */
+			height: 100%; /* Full height (cover the whole page) */
+			top: 0%;
+			left: 0%;
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+			z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+			cursor: pointer; /* Add a pointer on hover */
+		}
+		.overlay2 {
+			position: fixed; /* Sit on top of the page content */
+			display: ; /* Hidden by default */
+			width: 70%; /* Full width (cover the whole page) */
+			height: 70%; /* Full height (cover the whole page) */
+			top: 15%;
+			left: 15%;
+			border-radius: 25px;
+			border: 5px solid #000000;
+			right: 0;
+			bottom: 0;
+			background-color: #ffffff;
+			z-index: 3; /* Specify a stack order in case you're using a different order for other elements */
+			cursor: default;
+		}
+		.center{
+			margin: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+		}
+		
+		
+	</style>
+	<body>	
+		<hr>
+		<div class="grid3">
+			<!-- TEAM NAMEN/-->
+			<div class="grid3a teams " style="cursor: pointer;" id=heim_team title=Bearbeiten>Heim</div> 
+			<div class="grid3b teams" id=teams_minus >-</div>
+			<div class="grid3c teams" style="cursor: pointer;" id=gast_team title=Bearbeiten>Gast</div>
+			<div class=grid3a style="display: none" id=heim_set > <input class=teams type=text id=heim_in size=10 value=Heim></div>
+			<div class="grid3b teams" id=teams_minus_set style="display: none" >-</div>
+			<div class=grid3c style="display: none" id=gast_set> <input class=teams type=text id=gast_in size=10 value=Heim></div>
+			
+			<!-- SPIELSTAND/-->
+			<div class="grid3a stand" id=heim_tore>0</div>
+			<div class="grid3b stand">:</div>
+			<div class="grid3c stand" id=gast_tore>0</div>
+			<div class="grid3a ">
+				<button id=btn_heim_tore_minus class=halt title="Tor zurücknehmen">-</button>
+				<button id=btn_heim_tore_plus class=halt title="Tor hinzufügen">+</button>
+			</div>
+			<div class="grid3b "></div>
+			<div class="grid3c ">
+				<button id=btn_gast_tore_minus class=halt title="Tor zurücknehmen">-</button>
+				<button id=btn_gast_tore_plus class=halt title="Tor hinzufügen">+</button>
+			</div>
+		</div> 
+		<hr>
+		
+		<!-- ZEITANZEIGE/-->
+		<div class=zeit  style="cursor: pointer;" id=zeit>00:00.0</div>
+		<div style="text-align: center; display: none;" id=zeit_set ><input class=zeit type=text id=zeit_in size=7 value=00:00.0></div>
+		<div class="grid3b halt">
+			<button id=zeit_0 title="Uhr nullen">0</button>
+			<button id=zeit_minus title="Uhr 1 Sek. zurückstellen">-</button>
+			<button id=zeit_plus title="Uhr 1 Sek. vorstellen">+</button>
+			<!--button id=zeit_edit title="Uhr bearbeiten">&#128393</button-->
+		</div>
+		<hr>
+		<!-- STRAFEN ANZEIGE/-->
+		<div class="grid3">
+			<div class="grid3a strafzeit"  style="cursor: pointer;" id="heim_strafe">00:00</div>
+			<div class="grid3a" style="display: none;" id=heim_s_set ><input class=strafzeit type=text id=heim_s_in size=5 value=00:00></div>
+			<div class="grid3b" style="width: 50px"></div>
+			<div class="grid3c strafzeit"  style="cursor: pointer;" id="gast_strafe">00:00</div>
+			<div class="grid3c" style="display: none;" id=gast_s_set ><input class=strafzeit type=text id=gast_s_in size=5 value=00:00></div>
+			<div class="grid3a halt">
+				<button id=btn_heim_strafe_0 title="Strafe nullen">0</button>
+				<button id=btn_heim_strafe_2 title="2 Minuten Strafe">2</button>
+				<button id=btn_heim_strafe_4 title="4 Minuten Strafe">4</button>
+				<a>&nbsp&nbsp&nbsp</a>
+				<button style=display:none id=btn_heim_strafe_minus title="Strafe 1 Sek. zurückstellen">-</button>
+				<button style=display:none id=btn_heim_strafe_plus title="Strafe 1 Sek. vorstellen">+</button>
+				<!--button id=btn_heim_s_edit title="Strafe bearbeiten">&#128393</button-->
+			</div>
+			<div class="grid3b" style="width: 50px">
+			</div>
+			<div class="grid3c halt">
+				<button id=btn_gast_strafe_0 title="Strafe nullen">0</button>
+				<button id=btn_gast_strafe_2 title="2 Minuten Strafe">2</button>
+				<button id=btn_gast_strafe_4 title="4 Minuten Strafe">4</button>
+				<a>&nbsp&nbsp&nbsp</a>
+				<button style=display:none id=btn_gast_strafe_minus title="Strafe 1 Sek. zurückstellen">-</button>
+				<button style=display:none id=btn_gast_strafe_plus title="Strafe 1 Sek. vorstellen">+</button>
+				<button id=zweite_reihe_strafen_plus title="Neue Zeile für Strafen" style="margin-left: 5cm"
+			onclick="getElementById('zweite_reihe_strafen').style.display = '';
+			getElementById('zweite_reihe_strafen_minus').style.display = '';
+			getElementById('zweite_reihe_strafen_plus').style.display = 'none'; "
+			>+</button>
+			<button id=zweite_reihe_strafen_minus title="Zeile für Strafen entfernen" style="display: none; margin-left: 5cm"
+			onclick="getElementById('zweite_reihe_strafen').style.display = 'none';
+			getElementById('zweite_reihe_strafen_minus').style.display = 'none';
+			getElementById('zweite_reihe_strafen_plus').style.display = ''; "
+			>-</button>
+			</div>
+
+		</div> 
+		<!-- STRAFEN ANZEIGE2/-->
+		<div class="grid3"  id=zweite_reihe_strafen style="display: none">
+			<div class="grid3a strafzeit"  style="cursor: pointer;" id="heim_strafe2">00:00</div>
+			<div class="grid3a" style="display: none;" id=heim_s_set2 ><input class=strafzeit type=text id=heim_s_in2 size=5 value=00:00></div>
+			<div class="grid3b" style="width: 50px"></div>
+			<div class="grid3c strafzeit"  style="cursor: pointer;" id="gast_strafe2">00:00</div>
+			<div class="grid3c" style="display: none;" id=gast_s_set2 ><input class=strafzeit type=text id=gast_s_in2 size=5 value=00:00></div>
+			<div class="grid3a halt">
+				<button id=btn_heim_strafe_02 title="Strafe nullen">0</button>
+				<button id=btn_heim_strafe_22 title="2 Minuten Strafe">2</button>
+				<button id=btn_heim_strafe_42 title="4 Minuten Strafe">4</button>
+				<a>&nbsp&nbsp&nbsp</a>
+				<button style=display:none id=btn_heim_strafe_minus2 title="Strafe 1 Sek. zurückstellen">-</button>
+				<button style=display:none id=btn_heim_strafe_plus2 title="Strafe 1 Sek. vorstellen">+</button>
+			</div>
+			<div class="grid3b" style="width: 50px">
+			</div>
+			<div class="grid3c halt">
+				<button id=btn_gast_strafe_02 title="Strafe nullen">0</button>
+				<button id=btn_gast_strafe_22 title="2 Minuten Strafe">2</button>
+				<button id=btn_gast_strafe_42 title="4 Minuten Strafe">4</button>
+				<a>&nbsp&nbsp&nbsp</a>
+				<button style=display:none id=btn_gast_strafe_minus2 title="Strafe 1 Sek. zurückstellen">-</button>
+				<button style=display:none id=btn_gast_strafe_plus2 title="Strafe 1 Sek. vorstellen">+</button>
+				<!--button id=btn_gast_s_edit title="Strafe bearbeiten">&#128393</button-->
+			</div>
+		</div> 
+		<hr/>
+		<div class="grid3b">
+			<button class=bigger id=zeit_play      title="Uhr starten">&#9205</button>
+			<button class=bigger id=zeit_halt      title="Uhr anhalten" style=display:none>&#9208</button>
+			<button class=bigger id=team_namen_ok  title=Speichern style=display:none>OK</button>
+			<button class=bigger id=zeit_ok        title=Speichern style=display:none>OK</button>
+			<button class=bigger id=btn_heim_s_ok  title=Speichern style=display:none>OK</button>
+			<button class=bigger id=btn_gast_s_ok  title=Speichern style=display:none>OK</button>
+			<button class=bigger id=btn_heim_s_ok2 title=Speichern style=display:none>OK</button>
+			<button class=bigger id=btn_gast_s_ok2 title=Speichern style=display:none>OK</button>
+		</div>
+		<div class="grid3a halt">
+			<button id=btn_uhr title="Öffne Uhr Anzeige">&#128337</button>
+			<button id=btn_count_down title="Öffne Countdown-Anzeige">&#9203</button>
+			<button id=btn_anleitung title="Anleitung">&#8505</button>
+			<button id=reset title="Reset" onclick=location.reload()>&#11119</button>
+		</div>
+		<!-- COUNT DOWN OVERLAY -->
+		<div id=count_down class="overlay" style=display:none onclick=count_down_anzeigen()>
+			<div class=overlay2 onclick=event.stopPropagation()>
+				<div class=center>
+					<p class="grid3b teams">Countdown<p/>
+					<div class=zeit  style="cursor: pointer; color: #eb1000;" id=cd_zeit >00:30.0</div>
+					<div style="text-align: center; display: none;" id=cd_zeit_set >
+						<input class=zeit style="color: #eb1000;" type=text id=cd_zeit_in size=7 value=00:30.0>
+					</div>
+					<div id=cd_zeit_buttons class=grid3b style="content:'';clear: both;display: table;width:100%;margin-bottom: 3mm">
+						<button onclick="set_fixed_cd_timer(600)" class=but_group style="width:24%">10 Min</button>
+						<button onclick="set_fixed_cd_timer(300)" class=but_group style="width:24%">5 Min</button>
+						<button onclick="set_fixed_cd_timer(30)"  class=but_group style="width:24%">30 Sek</button>
+						<button onclick="edit_cd_time()"          class=but_group style="width:24%">Manuell</button>
+					</div>
+					<div class=grid3b>
+						<button class=bigger id=cd_play                    title="Countdown starten">&#9205</button>
+						<button class=bigger id=cd_halt style=display:none title="Countdown halten">&#9208</button>
+						<button class=bigger id=cd_ok   style=display:none title="Speichern">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- UHR OVERLAY /-->
+		<div id=uhr class="overlay" style=display:none onclick=uhr_anzeigen()>
+			<div class=overlay2 onclick=event.stopPropagation()>
+				<div class=center>
+					<p class="grid3b teams" >Uhrzeit<p />
+					<div class="zeit"  id=uhr_zeit ></div>
+					<div id=zeit_buttons class=grid3b style="content:'';clear: both;display: table;width:100%;margin-bottom: 3mm">
+						<button onclick="uhr_korrigieren(60)" class=but_group style="width:24%">+ 1 Std</button>
+						<button onclick="uhr_korrigieren(-60)"          class=but_group style="width:24%">- 1 Std</button>
+						<button onclick="uhr_korrigieren(1)" class=but_group style="width:24%">+ 1 Min</button>
+						<button onclick="uhr_korrigieren(-1)"  class=but_group style="width:24%">- 1 Min</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Anleitung OVERLAY /-->
+		<div id=anleitung class="overlay" style=display:none onclick=anleitung_fn()>
+			<div class=overlay2 onclick=event.stopPropagation()>
+				<div class=center  style="width:90%;height:90%;overflow:scroll;padding:5px;scrollbar-base-color:#DEBB07;font-family: 'Helvetica', sans-serif ;">
+					<p><strong>FANTA</strong> - 
+					Floorball-Anzeigen-Tafel
+					<br />
+					by Thomas B&uuml;chler</p>
+					<hr/>
+					<p>
+						<strong>Zweck</strong><br />
+						Dieses HTML-ist dazu gedacht als Anzeige in einem Floorballspiel zu dienen.<br />
+						Es ist in der Lage Teamnamen, Tore, Zeit und bis zu zwei Strafen je Team anzuzeigen.<br />
+						Alternativ kann die Uhrzeit oder ein Countdown angezeigt werden.
+					</p>
+					<hr />
+					<p>
+						<strong>Bedienung</strong>
+					</p>
+					<ol>
+						<li>
+							<strong>Teamnamen</strong>
+							<ul>
+								<li>Per Klick auf die Namen, lassen sich die Teamnamen eintragen. Best&auml;tigung mit &quot;OK&quot; oder Enter-Taste. (Nur wenn die Uhr steht.)</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Tore</strong>
+						<ul>
+							<li>Plus- und Minus-Buttons ver&auml;ndern jeweils die Toranzeige um eins.</li>
+						</ul>
+						</li>
+						<li>
+							<strong>Uhr</strong>
+							<ul>
+								<li>Starten: Klick auf Play (&#9654), oder Leerzeichen-Taste</li>
+								<li>Stoppen: Klick auf Stopp (&#9208), oder Leerzeichen-Taste</li>
+								<li>Manuelles Bearbeiten: Klick auf die Zeitanzeige. (Nur wenn die Uhr steht.)</li>
+								<li>Plus- und Minus-Buttons ver&auml;ndern jeweils die Zeit um eine Sekunde. (Strafen werden angepasst)</li>
+								<li>Null-Button setzt die Uhr auf 0. Strafenzeiten werden behalten. Gedacht beim Wechsel eines Spielabschnitts.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Strafen</strong>
+							<ul>
+								<li>Buttons &quot;0&quot;, &quot;2&quot; und &quot;4&quot; setzen die jeweilige Strafzeit auf entsprechende Anzahl Minuten.</li>
+								<!--li>Plus- und Minus-Buttons ver&auml;ndern jeweils die Strafzeit um eine Sekunde. (Sollte eigentlich nicht gebraucht werden)</li-->
+								<li>Manuelles Bearbeiten: Klick auf die Zeitanzeige. (Nur wenn die Uhr steht.)</li>
+								<li>Hinzuf&uuml;gen einer zweiten Reihe Strafanzeigen. (F&uuml;r: Gro&szlig;feld, wenn zwei Strafen gemessen werden.) &uuml;ber das Plus-Button unter den Strafen. &Uuml;ber den gleichen Button l&auml;sst sich die Anzeige wieder Entfernen.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Overlays</strong>
+							<ul>
+								<li>Es gibt Overlays für die Uhrzeit, einen Countdown und diese Bedienungsanleitung.
+								Angezeigt werden sie durch Klick auf (&#128337), (&#8987) und (&#10067).
+								Ausgeblendet wird ein Overlay durch Klick neben das Overlay oder Escape-Taste.
+								</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Zur&uuml;cksetzen</strong>
+							<ul>
+								<li>Reset-Button (&#11118) rechts unten setzt alle Werte zur&uuml;ck.</li>
+							</ul>
+						</li>
+					</ol>
+					<hr />
+					<p><strong>Lizenz</strong><br />
+					Creativ Common.<br />
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		//---------------------------------------------------------------------------
+		//TEAMNAMEN SETZEN
+		document.getElementById("heim_team").addEventListener("click", set_teams);
+		document.getElementById("gast_team").addEventListener("click", set_teams);
+		document.getElementById("team_namen_ok").addEventListener("click", set_teams_ok);
+
+		function set_teams(){	
+			if(running() || edit() ) return;
+			run_fn();
+			document.getElementById("heim_in").value = document.getElementById("heim_team").innerHTML;
+			document.getElementById("gast_in").value = document.getElementById("gast_team").innerHTML;
+			
+			document.getElementById("heim_team")	.style.display = "none";
+			document.getElementById("teams_minus")	.style.display = "none";
+			document.getElementById("gast_team")	.style.display = "none";
+			document.getElementById("zeit_halt")	.style.display = "none";
+			
+			document.getElementById("heim_set")			.style.display = "";
+			document.getElementById("teams_minus_set")	.style.display = "";
+			document.getElementById("gast_set")			.style.display = "";
+			document.getElementById("team_namen_ok")		.style.display = "";
+			
+			document.activeElement.blur();
+		}
+
+		function set_teams_ok(){
+			document.getElementById("heim_team").innerHTML = document.getElementById("heim_in").value;
+			document.getElementById("gast_team").innerHTML = document.getElementById("gast_in").value;	
+			
+			document.getElementById("heim_team")	.style.display = "";
+			document.getElementById("teams_minus")	.style.display = "";
+			document.getElementById("gast_team")	.style.display = "";
+			document.getElementById("zeit_halt")	.style.display = "";
+			
+			document.getElementById("heim_set")			.style.display = "none";
+			document.getElementById("teams_minus_set")	.style.display = "none";
+			document.getElementById("gast_set")			.style.display = "none";
+			document.getElementById("team_namen_ok")		.style.display = "none";
+			document.activeElement.blur();
+			
+			halt_fn();
+		}
+		//---------------------------------------------------------------------------
+
+		//---------------------------------------------------------------------------
+		//TORE
+		let heim_tore = 0;
+		let gast_tore = 0;
+
+		document.getElementById("btn_heim_tore_minus")	.addEventListener("click", heim_minus_fn);
+		document.getElementById("btn_heim_tore_plus")	.addEventListener("click", heim_plus_fn);
+		document.getElementById("btn_gast_tore_minus")	.addEventListener("click", gast_minus_fn);
+		document.getElementById("btn_gast_tore_plus")	.addEventListener("click", gast_plus_fn);
+
+		function heim_minus_fn(){
+			document.getElementById("heim_tore").innerHTML = --heim_tore;
+			document.activeElement.blur();
+		}
+		function heim_plus_fn(){
+			document.getElementById("heim_tore").innerHTML = ++heim_tore;
+			document.activeElement.blur();
+		}
+		function gast_minus_fn(){
+			document.getElementById("gast_tore").innerHTML = --gast_tore;
+			document.activeElement.blur();
+		}
+		function gast_plus_fn(){
+			document.getElementById("gast_tore").innerHTML = ++gast_tore;
+			document.activeElement.blur();
+		}
+		//---------------------------------------------------------------------------
+
+		//---------------------------------------------------------------------------
+		//CHANGE VISIBLITY WHEN RUNNING
+		document.getElementById("zeit_play").addEventListener("click", run_fn);
+		document.getElementById("zeit_halt").addEventListener("click", halt_fn);
+
+		function run_fn(){
+			objs = document.getElementsByClassName("halt");
+			Array.from(objs).forEach(obj => {obj.style.visibility = "hidden"; });
+			document.getElementById("zeit_play").style.display = "none"; 
+			document.getElementById("zeit_halt").style.display = ""; 
+			
+			document.getElementById("heim_team").style.cursor = "default";
+			document.getElementById("gast_team").style.cursor = "default";
+			document.getElementById("zeit").style.cursor = "default";
+			document.getElementById("heim_strafe").style.cursor = "default";
+			document.getElementById("gast_strafe").style.cursor = "default";
+			
+			document.activeElement.blur();
+		}
+
+		function halt_fn(){
+			objs = document.getElementsByClassName("halt");
+			Array.from(objs).forEach(obj => {obj.style.visibility = "visible"; });
+			document.getElementById("zeit_play").style.display = ""; 
+			document.getElementById("zeit_halt").style.display = "none"; 
+			
+			document.getElementById("heim_team").style.cursor = "pointer";
+			document.getElementById("gast_team").style.cursor = "pointer";
+			document.getElementById("zeit").style.cursor = "pointer";
+			document.getElementById("heim_strafe").style.cursor = "pointer";
+			document.getElementById("gast_strafe").style.cursor = "pointer";			
+			
+			document.activeElement.blur();
+		}
+
+		//---------------------------------------------------------------------------
+		///HELPER
+		function zeit_zu_text(time){
+			let mm = time;
+			mm = Math.floor(mm / 100);
+			let ds = mm % 10;
+			mm = (mm - ds)/10;
+			let ss = mm % 60;
+			mm = (mm - ss)/60;
+			return mm.toString().padStart(2, "0") + ":" + ss.toString().padStart(2, "0")  + "." + ds;  
+		}
+		function text_zu_zeit(txt){
+			if(txt.split(':').length < 2){
+				return 0;
+			}
+		  	out = 1000 * ((+txt.split(':')[0]) * 60  + (+txt.split(':')[1].split('.')[0]));
+		  	if(txt.split(':')[1].split('.').length > 1){
+		  		out += 100 * (+txt.split(':')[1].split('.')[1]);
+		  	}
+		  	return out;
+		}
+
+		//---------------------------------------------------------------------------
+		//ZEITSTEMPEL
+		let timer_start;
+		let time = 0;
+		let timer_iv;
+
+		//ZEIT FUNKTIONEN
+		document.getElementById("zeit_play").addEventListener("click", start_timer);
+		document.getElementById("zeit_halt").addEventListener("click", stop_timer);
+		document.getElementById("zeit_minus").addEventListener("click", sub_a_sec);
+		document.getElementById("zeit_plus").addEventListener("click", add_a_sec);
+		document.getElementById("zeit_0").addEventListener("click", reset_time);
+		document.getElementById("zeit").addEventListener("click", edit_time);
+		document.getElementById("zeit_ok").addEventListener("click", set_time);
+
+		function zeige_zeit(){
+		  	document.getElementById("zeit").innerHTML = zeit_zu_text(time);
+		  	if( !(Math.floor(time / 100) % 10) ){
+		  		zeige_strafen();
+		  		zeige_strafen2();
+		  	}
+		}
+
+		function start_timer() {
+			zeige_zeit()
+			timer_start = Date.now() - time;
+			timer_iv = setInterval(
+			function update() {
+				time = Date.now() - timer_start;
+		  		zeige_zeit();
+		    	}, 50); //0.1 sec
+			document.activeElement.blur();
+		}
+
+		function stop_timer() {
+			clearInterval(timer_iv);
+			//time = Math.round(time / 1000) * 1000;
+			//zeige_zeit();
+			document.activeElement.blur();
+		}
+
+		function sub_a_sec(){
+			time = ( Math.ceil(time/1000) - 1) * 1000;
+			zeige_zeit();
+			document.activeElement.blur();
+		}
+
+		function add_a_sec(){
+			time = ( Math.floor(time/1000) + 1) * 1000;
+			zeige_zeit();
+			document.activeElement.blur();
+		}
+
+		function reset_time(){
+			//strafen behalten
+			if(heim_strafe_end>time) heim_strafe_end -=  time;
+			if(heim_strafe_end2>time) heim_strafe_end2 -=  time;
+			if(gast_strafe_end>time) gast_strafe_end -=  time;
+			if(gast_strafe_end2>time) gast_strafe_end2 -=  time;
+			time = 0;
+			zeige_zeit();
+			document.activeElement.blur();
+		}
+
+		//---------------------------------------------------------------------------
+		//ZEIT BEARBEITEN
+		function edit_time(){
+			if(running() || edit() ) return;	
+			run_fn();
+			document.getElementById("zeit_in").value = zeit_zu_text(time);
+			document.getElementById("zeit")		.style.display = "none";
+			document.getElementById("zeit_halt")	.style.display = "none";
+			document.getElementById("zeit_set")		.style.display = "";
+			document.getElementById("zeit_ok")		.style.display = "";
+		}
+
+		function set_time(){
+			time = text_zu_zeit(document.getElementById("zeit_in").value);
+			document.getElementById("zeit")		.style.display = "";
+			document.getElementById("zeit_halt")	.style.display = "";
+			document.getElementById("zeit_set")		.style.display = "none";
+			document.getElementById("zeit_ok")		.style.display = "none";
+			zeige_zeit();
+		  	halt_fn();
+		}
+
+		//---------------------------------------------------------------------------
+		//STRAFEN KONTROLLE
+		let heim_strafe_end = 0;
+		let gast_strafe_end = 0;
+		let SEK = 1000;
+		let MIN = 60*SEK;
+
+		document.getElementById("btn_heim_strafe_0").addEventListener("click", function () { strafe_setzen(true,0*MIN); });
+		document.getElementById("btn_heim_strafe_2").addEventListener("click", function () { strafe_setzen(true,2*MIN); });
+		document.getElementById("btn_heim_strafe_4").addEventListener("click", function () { strafe_setzen(true,4*MIN); });
+		document.getElementById("btn_heim_strafe_plus").addEventListener("click", function () { strafe_hinzufuegen(true,1*SEK); });
+		document.getElementById("btn_heim_strafe_minus").addEventListener("click", function () { strafe_hinzufuegen(true,-1*SEK); });
+
+		document.getElementById("btn_gast_strafe_0").addEventListener("click", function () { strafe_setzen(false,0*MIN); });
+		document.getElementById("btn_gast_strafe_2").addEventListener("click", function () { strafe_setzen(false,2*MIN); });
+		document.getElementById("btn_gast_strafe_4").addEventListener("click", function () { strafe_setzen(false,4*MIN); });
+		document.getElementById("btn_gast_strafe_plus").addEventListener("click", function () { strafe_hinzufuegen(false,1*SEK); });
+		document.getElementById("btn_gast_strafe_minus").addEventListener("click", function () { strafe_hinzufuegen(false,-1*SEK); });
+
+		function zeige_strafe(heim, time){
+			let field = document.getElementById("heim_strafe");
+			let anzeige = "00:00";
+			if(!heim) field = document.getElementById("gast_strafe");
+			if(time > 0) anzeige = zeit_zu_text(time).split(".")[0];
+			else{
+				if(heim) heim_strafe_end = 0;
+				else gast_strafe_end = 0;
+			}
+			field.innerHTML = anzeige;
+			if(anzeige == "00:00" )
+				field.style.color = "#737373"; //gray
+			else
+				field.style.color = "#eb1000"; //red
+		}
+
+		function zeige_strafen(){
+			zeige_strafe(true, heim_strafe_end - time);
+			zeige_strafe(false, gast_strafe_end - time);
+		}
+
+		function strafe_setzen(heim, s_time){
+			if(heim){
+				heim_strafe_end = time + s_time;
+			}else{
+				gast_strafe_end = time + s_time;
+			}
+			zeige_strafe(heim,s_time);
+		}
+
+		function strafe_hinzufuegen(heim, s_time){
+			if(heim){
+				if(heim_strafe_end < time) heim_strafe_end = time;
+				heim_strafe_end += s_time;
+			}else{
+				if(gast_strafe_end < time) gast_strafe_end = time;
+				gast_strafe_end += s_time;
+			}
+			zeige_strafen(heim, s_time);	
+		}
+
+		//---------------------------------------------------------------------------
+		//STRAFZEIT BEARBEITEN
+
+		document.getElementById("heim_strafe").addEventListener("click", heim_s_edit_time);
+		document.getElementById("btn_heim_s_ok").addEventListener("click", heim_s_set_time);
+		document.getElementById("gast_strafe").addEventListener("click", gast_s_edit_time);
+		document.getElementById("btn_gast_s_ok").addEventListener("click", gast_s_set_time);
+
+		function heim_s_edit_time(){
+			if(running() || edit() ) return;	
+			run_fn();
+			document.getElementById("heim_s_in").value = document.getElementById("heim_strafe").innerHTML;
+			document.getElementById("heim_strafe")		.style.display = "none";
+			//document.getElementById("btn_heim_s_edit")	.style.display = "none";
+			document.getElementById("zeit_halt")		.style.display = "none";
+			document.getElementById("heim_s_set")		.style.display = "";
+			document.getElementById("btn_heim_s_ok")		.style.display = "";
+			document.activeElement.blur();
+		}
+
+		function heim_s_set_time(){
+			strafe_setzen(true, text_zu_zeit(document.getElementById("heim_s_in").value))	
+			document.getElementById("heim_strafe")		.style.display = "";
+			//document.getElementById("btn_heim_s_edit")	.style.display = "";
+			document.getElementById("zeit_halt")		.style.display = "";
+			document.getElementById("heim_s_set")		.style.display = "none";
+			document.getElementById("btn_heim_s_ok")		.style.display = "none";
+		  	halt_fn();
+			document.activeElement.blur();
+		}
+		function gast_s_edit_time(){
+			if(running() || edit() ) return;	
+			run_fn();
+			document.getElementById("gast_s_in").value = document.getElementById("gast_strafe").innerHTML;
+			document.getElementById("gast_strafe")		.style.display = "none";
+			//document.getElementById("btn_gast_s_edit")	.style.display = "none";
+			document.getElementById("zeit_halt")		.style.display = "none";
+			document.getElementById("gast_s_set")		.style.display = "";
+			document.getElementById("btn_gast_s_ok")		.style.display = "";
+			document.activeElement.blur();
+		}
+
+		function gast_s_set_time(){
+			strafe_setzen(false, text_zu_zeit(document.getElementById("gast_s_in").value))	
+			document.getElementById("gast_strafe")		.style.display = "";
+			//document.getElementById("btn_gast_s_edit")	.style.display = "";
+			document.getElementById("zeit_halt")		.style.display = "";
+			document.getElementById("gast_s_set")		.style.display = "none";
+			document.getElementById("btn_gast_s_ok")		.style.display = "none";
+		  	halt_fn();
+			document.activeElement.blur();
+		}
+		//---------------------------------------------------------------------------
+		//STRAFEN KONTROLLE 2
+		let heim_strafe_end2 = 0;
+		let gast_strafe_end2 = 0;
+
+		document.getElementById("btn_heim_strafe_02").addEventListener("click", function () { strafe_setzen2(true,0*MIN); });
+		document.getElementById("btn_heim_strafe_22").addEventListener("click", function () { strafe_setzen2(true,2*MIN); });
+		document.getElementById("btn_heim_strafe_42").addEventListener("click", function () { strafe_setzen2(true,4*MIN); });
+		document.getElementById("btn_heim_strafe_plus2").addEventListener("click", function () { strafe_hinzufuegen2(true,1*SEK); });
+		document.getElementById("btn_heim_strafe_minus2").addEventListener("click", function () { strafe_hinzufuegen2(true,-1*SEK); });
+
+		document.getElementById("btn_gast_strafe_02").addEventListener("click", function () { strafe_setzen2(false,0*MIN); });
+		document.getElementById("btn_gast_strafe_22").addEventListener("click", function () { strafe_setzen2(false,2*MIN); });
+		document.getElementById("btn_gast_strafe_42").addEventListener("click", function () { strafe_setzen2(false,4*MIN); });
+		document.getElementById("btn_gast_strafe_plus2").addEventListener("click", function () { strafe_hinzufuegen2(false,1*SEK); });
+		document.getElementById("btn_gast_strafe_minus2").addEventListener("click", function () { strafe_hinzufuegen2(false,-1*SEK); });
+
+		function zeige_strafe2(heim, time){
+			let field = document.getElementById("heim_strafe2");
+			let anzeige = "00:00";
+			if(!heim) field = document.getElementById("gast_strafe2");
+			if(time > 0) anzeige = zeit_zu_text(time).split(".")[0];
+			else{
+				if(heim) heim_strafe_end2 = 0;
+				else gast_strafe_end2 = 0;
+			}
+			field.innerHTML = anzeige;
+			if(anzeige == "00:00" )
+				field.style.color = "#737373"; //gray
+			else
+				field.style.color = "#eb1000"; //red
+		}
+
+		function zeige_strafen2(){
+			zeige_strafe2(true, heim_strafe_end2 - time);
+			zeige_strafe2(false, gast_strafe_end2 - time);
+		}
+
+		function strafe_setzen2(heim, s_time){
+			if(heim){
+				heim_strafe_end2 = time + s_time;
+			}else{
+				gast_strafe_end2 = time + s_time;
+			}
+			zeige_strafe2(heim,s_time);
+		}
+
+		function strafe_hinzufuegen2(heim, s_time){
+			if(heim){
+				if(heim_strafe_end2 < time) heim_strafe_end2 = time;
+				heim_strafe_end2 += s_time;
+			}else{
+				if(gast_strafe_end2 < time) gast_strafe_end2 = time;
+				gast_strafe_end2 += s_time;
+			}
+			zeige_strafen2(heim, s_time);
+		}
+
+		//---------------------------------------------------------------------------
+		//STRAFZEIT BEARBEITEN 2
+		document.getElementById("heim_strafe2").addEventListener("click", heim_s_edit_time2);
+		document.getElementById("btn_heim_s_ok2").addEventListener("click", heim_s_set_time2);
+		document.getElementById("gast_strafe2").addEventListener("click", gast_s_edit_time2);
+		document.getElementById("btn_gast_s_ok2").addEventListener("click", gast_s_set_time2);
+
+		function heim_s_edit_time2(){
+			if(running() || edit() ) return;	
+			run_fn();
+			document.getElementById("heim_s_in2").value = document.getElementById("heim_strafe2").innerHTML;
+			document.getElementById("heim_strafe2")		.style.display = "none";
+			//document.getElementById("btn_heim_s_edit")	.style.display = "none";
+			document.getElementById("zeit_halt")		.style.display = "none";
+			document.getElementById("heim_s_set2")		.style.display = "";
+			document.getElementById("btn_heim_s_ok2")		.style.display = "";
+			document.activeElement.blur();
+		}
+
+		function heim_s_set_time2(){
+			strafe_setzen2(true, text_zu_zeit(document.getElementById("heim_s_in2").value))	
+			document.getElementById("heim_strafe2")		.style.display = "";
+			//document.getElementById("btn_heim_s_edit")	.style.display = "";
+			document.getElementById("zeit_halt")		.style.display = "";
+			document.getElementById("heim_s_set2")		.style.display = "none";
+			document.getElementById("btn_heim_s_ok2")		.style.display = "none";
+		  	halt_fn();
+			document.activeElement.blur();
+		}
+
+		function gast_s_edit_time2(){
+			if(running() || edit() ) return;	
+			run_fn();
+			document.getElementById("gast_s_in2").value = document.getElementById("gast_strafe2").innerHTML;
+			document.getElementById("gast_strafe2")		.style.display = "none";
+			//document.getElementById("btn_gast_s_edit")	.style.display = "none";
+			document.getElementById("zeit_halt")		.style.display = "none";
+			document.getElementById("gast_s_set2")		.style.display = "";
+			document.getElementById("btn_gast_s_ok2")		.style.display = "";
+			document.activeElement.blur();
+		}
+
+		function gast_s_set_time2(){
+			strafe_setzen2(false, text_zu_zeit(document.getElementById("gast_s_in2").value))	
+			document.getElementById("gast_strafe2")		.style.display = "";
+			//document.getElementById("btn_gast_s_edit")	.style.display = "";
+			document.getElementById("zeit_halt")		.style.display = "";
+			document.getElementById("gast_s_set2")		.style.display = "none";
+			document.getElementById("btn_gast_s_ok2")		.style.display = "none";
+		  	halt_fn();
+			document.activeElement.blur();
+		}
+		//---------------------------------------------------------------------------
+		//COUNT_DOWN
+		let cd_time = 30*SEK;
+		let cd_timer_iv;
+		let cd_running = false;
+		document.getElementById("btn_count_down").addEventListener("click", count_down_anzeigen);
+		document.getElementById("cd_play").addEventListener("click", start_cd_timer);
+		document.getElementById("cd_halt").addEventListener("click", stop_cd_timer);
+		
+		function count_down_anzeigen(){
+			zeige_cd_zeit(cd_time);
+			if(window.getComputedStyle(document.getElementById("count_down")).display === "none")
+				document.getElementById("count_down").style.display = "";
+			else
+				document.getElementById("count_down").style.display = "none";
+			document.activeElement.blur();
+		}
+		
+		function zeige_cd_zeit(time){
+			document.getElementById("cd_zeit").innerHTML = zeit_zu_text(time);
+		}
+
+		function start_cd_timer() {
+			if(cd_running) return;
+			cd_running = true;
+			document.getElementById("cd_play").style.display = "none";
+			document.getElementById("cd_halt").style.display = "";
+			zeige_cd_zeit(cd_time);
+			timer_end = Date.now() + cd_time;
+			cd_timer_iv = setInterval(
+			function update() {
+				if(cd_time > 0 ) cd_time = timer_end - Date.now();
+				if(cd_time <= 0 ) {cd_time = 0; stop_cd_timer();}
+		  		zeige_cd_zeit(cd_time);
+		    	}, 50); //0.1 sec
+			document.activeElement.blur();
+		}
+
+		function stop_cd_timer() {
+			if(!cd_running) return;
+			cd_running = false;
+			document.getElementById("cd_halt").style.display = "none";
+			document.getElementById("cd_play").style.display = "";
+			clearInterval(cd_timer_iv);
+			document.activeElement.blur();
+		}
+
+		function set_fixed_cd_timer(new_time) {
+			stop_cd_timer();
+			cd_time = new_time*SEK;
+		  	zeige_cd_zeit(cd_time);
+			document.activeElement.blur();
+		}
+
+		//---------------------------------------------------------------------------
+		//COUNT_DOWN BEARBEITEN
+		document.getElementById("cd_zeit").addEventListener("click", edit_cd_time);
+		document.getElementById("cd_ok").addEventListener("click", set_cd_time);
+
+		function edit_cd_time(){
+			stop_cd_timer();
+			document.getElementById("cd_zeit_in").value = document.getElementById("cd_zeit").innerHTML;
+			var dis_none = ["cd_zeit","cd_halt", "cd_play"];
+			for (const x of dis_none) { 
+					document.getElementById(x).style.display = "none";
+			}
+			document.getElementById("cd_zeit_buttons").style.visibility = "hidden";
+			var dis = ["cd_zeit_set","cd_ok"];
+			for (const x of dis) { 
+					document.getElementById(x).style.display = "";
+			}
+			document.activeElement.blur();
+		}
+
+		function set_cd_time(){
+			cd_time = text_zu_zeit(document.getElementById("cd_zeit_in").value);
+			var dis = ["cd_zeit", "cd_play"];
+			for (const x of dis) { 
+					document.getElementById(x).style.display = "";
+			}
+			document.getElementById("cd_zeit_buttons").style.visibility = "";
+			var dis_none = ["cd_zeit_set","cd_ok", "cd_halt"];
+			for (const x of dis_none) { 
+					document.getElementById(x).style.display = "none";
+			}
+			zeige_cd_zeit(cd_time);
+			document.activeElement.blur();
+		}
+		//---------------------------------------------------------------------------
+		//UHRZEIT
+		let uhrzeit_iv;
+		let uhrzeit_offset = 0;
+
+		function uhrzeit_zu_text(time){
+			let t = time;
+			t = Math.floor(t / 100);
+			let ds = t % 10;
+			t = (t - ds)/10;
+			let ss = t % 60;
+			t = (t - ss)/60;
+			let mm = t % 60;
+			t = (t - mm)/60;
+			let hh = t % 24;
+			return hh.toString().padStart(2, "0") + ":" + mm.toString().padStart(2, "0")  + ":" + ss.toString().padStart(2, "0");  
+		}
+
+		function zeige_uhrzeit(time){
+			document.getElementById("uhr_zeit").innerHTML = uhrzeit_zu_text(time + uhrzeit_offset);
+		}
+
+		document.getElementById("btn_uhr").addEventListener("click", uhr_anzeigen);
+
+		function uhr_anzeigen(){
+			if(window.getComputedStyle(document.getElementById("uhr")).display === "none"){
+				zeige_uhrzeit(Date.now() - new Date().getTimezoneOffset() * 60000);
+				document.getElementById("uhr").style.display = "";
+				cd_timer_iv = setInterval(
+					function update() {
+			  			zeige_uhrzeit(Date.now() - new Date().getTimezoneOffset() * 60000);
+			    		}, 500);
+			}
+			else{
+				document.getElementById("uhr").style.display = "none";
+				clearInterval(cd_timer_iv);
+			}
+			document.activeElement.blur();
+		}
+		
+		function uhr_korrigieren(min){
+			uhrzeit_offset = uhrzeit_offset + min*60*SEK;
+			zeige_uhrzeit(Date.now() - new Date().getTimezoneOffset() * 60000)
+		}
+		//---------------------------------------------------------------------------
+		//ANLEITUNG
+		document.getElementById("btn_anleitung").addEventListener("click", anleitung_fn);
+		function anleitung_fn(){
+			if(window.getComputedStyle(document.getElementById("anleitung")).display === "none")
+				document.getElementById("anleitung").style.display = "";
+			else
+				document.getElementById("anleitung").style.display = "none";
+			document.activeElement.blur();
+		}
+		//--------------------------------------------------------------------------------
+		//KEYS
+		function running(){
+			return !(window.getComputedStyle(document.getElementById("zeit_halt")).display === "none");
+		}
+		function halting(){
+			return !(window.getComputedStyle(document.getElementById("zeit_play")).display === "none");
+		}
+		function edit(){
+			return !(running() || halting());
+		}
+		document.body.onkeyup = function(e) {
+			if (e.key == " ") {
+				if(!(window.getComputedStyle(document.getElementById("count_down")).display === "none")){
+					if(!cd_running) start_cd_timer();
+					else stop_cd_timer();
+				}else{
+					var play = document.getElementById("zeit_play");
+					var halt = document.getElementById("zeit_halt");
+					if (halting()) {
+						play.dispatchEvent(new Event('click'));
+		  			}
+		  			else if (running()){
+						halt.dispatchEvent(new Event('click'));
+		  			}
+		  		}
+			}
+			else if (e.key === 'Enter' || e.keyCode === 13) {
+				var items = ["team_namen_ok","zeit_ok", "btn_heim_s_ok", "btn_gast_s_ok", "btn_heim_s_ok2", "btn_gast_s_ok2", "cd_ok"  ];
+				for (const i of items) { 
+					var btn = document.getElementById(i);
+					if (!(window.getComputedStyle(btn).display === "none")) {
+						btn.click();
+		  			} 
+				}
+			}
+			else if (e.key === 'Escape' || e.keyCode === 27) {
+				var ov = document.getElementsByClassName("overlay");
+				for (const o of ov) {
+					o.style.display = "none";
+				}
+			}
+		}
+		function do_nothing(x){console.log("DO NOTHING " + x);}
+	</script>
+</html>
