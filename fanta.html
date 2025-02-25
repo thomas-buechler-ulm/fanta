@@ -76,9 +76,6 @@
 		.but_group{
 			border-radius:5%;
 			border: 0px solid;
-		
-		
-		
 		}
 		
 		.overlay {
@@ -117,9 +114,8 @@
 			-ms-transform: translate(-50%, -50%);
 			transform: translate(-50%, -50%);
 		}
-		
-		
 	</style>
+
 	<body>	
 		<hr>
 		<div class="grid3">
@@ -136,13 +132,13 @@
 			<div class="grid3b stand">:</div>
 			<div class="grid3c stand" id=gast_tore>0</div>
 			<div class="grid3a ">
-				<button id=btn_heim_tore_minus class=halt title="Tor zurücknehmen">-</button>
-				<button id=btn_heim_tore_plus class=halt title="Tor hinzufügen">+</button>
+				<button id=btn_heim_tore_minus class=halt_time title="Tor zurücknehmen">-</button>
+				<button id=btn_heim_tore_plus class=halt_time title="Tor hinzufügen">+</button>
 			</div>
 			<div class="grid3b "></div>
 			<div class="grid3c ">
-				<button id=btn_gast_tore_minus class=halt title="Tor zurücknehmen">-</button>
-				<button id=btn_gast_tore_plus class=halt title="Tor hinzufügen">+</button>
+				<button id=btn_gast_tore_minus class=halt_time title="Tor zurücknehmen">-</button>
+				<button id=btn_gast_tore_plus class=halt_time title="Tor hinzufügen">+</button>
 			</div>
 		</div> 
 		<hr>
@@ -159,29 +155,28 @@
 		<hr>
 		<!-- STRAFEN ANZEIGE/-->
 		<div class="grid3">
-			<div class="grid3a strafzeit"  style="cursor: pointer;" id="heim_strafe">00:00</div>
-			<div class="grid3a" style="display: none;" id=heim_s_set ><input class=strafzeit type=text id=heim_s_in size=5 value=00:00></div>
+			<div class="grid3a strafzeit"  style="cursor: pointer;">
+                <a id="heim_strafe_plus" style="color: #eb1000; visibility: hidden;">+2</a>
+                <a style="cursor: pointer;" id="heim_strafe">00:00</a>
+                <a style="display: none;" id=heim_s_set><input class=strafzeit type=text id=heim_s_in size=5 value=00:00></a>
+			</div>
 			<div class="grid3b" style="width: 50px"></div>
-			<div class="grid3c strafzeit"  style="cursor: pointer;" id="gast_strafe">00:00</div>
-			<div class="grid3c" style="display: none;" id=gast_s_set ><input class=strafzeit type=text id=gast_s_in size=5 value=00:00></div>
+			<div class="grid3c strafzeit">
+                <a style="cursor: pointer;" id="gast_strafe">00:00</a>
+                <a style="display: none;" id=gast_s_set><input class=strafzeit type=text id=gast_s_in size=5 value=00:00></a>
+                <a id="gast_strafe_plus" style="color: #eb1000; visibility: hidden;">+2</a>
+			</div>
 			<div class="grid3a halt">
 				<button id=btn_heim_strafe_0 title="Strafe nullen">0</button>
 				<button id=btn_heim_strafe_2 title="2 Minuten Strafe">2</button>
-				<button id=btn_heim_strafe_4 title="4 Minuten Strafe">4</button>
-				<a>&nbsp&nbsp&nbsp</a>
-				<button style=display:none id=btn_heim_strafe_minus title="Strafe 1 Sek. zurückstellen">-</button>
-				<button style=display:none id=btn_heim_strafe_plus title="Strafe 1 Sek. vorstellen">+</button>
-				<!--button id=btn_heim_s_edit title="Strafe bearbeiten">&#128393</button-->
+				<button id=btn_heim_strafe_4 title="2+2 Minuten Strafe">+2</button>
 			</div>
 			<div class="grid3b" style="width: 50px">
 			</div>
 			<div class="grid3c halt">
 				<button id=btn_gast_strafe_0 title="Strafe nullen">0</button>
 				<button id=btn_gast_strafe_2 title="2 Minuten Strafe">2</button>
-				<button id=btn_gast_strafe_4 title="4 Minuten Strafe">4</button>
-				<a>&nbsp&nbsp&nbsp</a>
-				<button style=display:none id=btn_gast_strafe_minus title="Strafe 1 Sek. zurückstellen">-</button>
-				<button style=display:none id=btn_gast_strafe_plus title="Strafe 1 Sek. vorstellen">+</button>
+				<button id=btn_gast_strafe_4 title="2+2 Minuten Strafe">+2</button>
 				<button id=zweite_reihe_strafen_plus title="Neue Zeile für Strafen" style="margin-left: 5cm"
 			onclick="getElementById('zweite_reihe_strafen').style.display = '';
 			getElementById('zweite_reihe_strafen_minus').style.display = '';
@@ -193,35 +188,34 @@
 			getElementById('zweite_reihe_strafen_plus').style.display = ''; "
 			>-</button>
 			</div>
-
 		</div> 
-		<!-- STRAFEN ANZEIGE2/-->
-		<div class="grid3"  id=zweite_reihe_strafen style="display: none">
-			<div class="grid3a strafzeit"  style="cursor: pointer;" id="heim_strafe2">00:00</div>
-			<div class="grid3a" style="display: none;" id=heim_s_set2 ><input class=strafzeit type=text id=heim_s_in2 size=5 value=00:00></div>
+        <!-- STRAFEN ANZEIGE (b) /-->
+		<div class="grid3" id=zweite_reihe_strafen style="display: none">
+			<div class="grid3a strafzeit"  style="cursor: pointer;">
+                <a id="heim_strafe_plus_b" style="color: #eb1000; visibility: hidden;">+2</a>
+                <a style="cursor: pointer;" id="heim_strafe_b">00:00</a>
+                <a style="display: none;" id=heim_s_set_b><input class=strafzeit type=text id=heim_s_in_b size=5 value=00:00></a>
+			</div>
 			<div class="grid3b" style="width: 50px"></div>
-			<div class="grid3c strafzeit"  style="cursor: pointer;" id="gast_strafe2">00:00</div>
-			<div class="grid3c" style="display: none;" id=gast_s_set2 ><input class=strafzeit type=text id=gast_s_in2 size=5 value=00:00></div>
+			<div class="grid3c strafzeit">
+                <a style="cursor: pointer;" id="gast_strafe_b">00:00</a>
+                <a style="display: none;" id=gast_s_set_b><input class=strafzeit type=text id=gast_s_in_b size=5 value=00:00></a>
+                <a id="gast_strafe_plus_b" style="color: #eb1000; visibility: hidden;">+2</a>
+			</div>
 			<div class="grid3a halt">
-				<button id=btn_heim_strafe_02 title="Strafe nullen">0</button>
-				<button id=btn_heim_strafe_22 title="2 Minuten Strafe">2</button>
-				<button id=btn_heim_strafe_42 title="4 Minuten Strafe">4</button>
-				<a>&nbsp&nbsp&nbsp</a>
-				<button style=display:none id=btn_heim_strafe_minus2 title="Strafe 1 Sek. zurückstellen">-</button>
-				<button style=display:none id=btn_heim_strafe_plus2 title="Strafe 1 Sek. vorstellen">+</button>
+				<button id=btn_heim_strafe_0_b title="Strafe nullen">0</button>
+				<button id=btn_heim_strafe_2_b title="2 Minuten Strafe">2</button>
+				<button id=btn_heim_strafe_4_b title="2+2 Minuten Strafe">+2</button>
 			</div>
 			<div class="grid3b" style="width: 50px">
 			</div>
 			<div class="grid3c halt">
-				<button id=btn_gast_strafe_02 title="Strafe nullen">0</button>
-				<button id=btn_gast_strafe_22 title="2 Minuten Strafe">2</button>
-				<button id=btn_gast_strafe_42 title="4 Minuten Strafe">4</button>
-				<a>&nbsp&nbsp&nbsp</a>
-				<button style=display:none id=btn_gast_strafe_minus2 title="Strafe 1 Sek. zurückstellen">-</button>
-				<button style=display:none id=btn_gast_strafe_plus2 title="Strafe 1 Sek. vorstellen">+</button>
-				<!--button id=btn_gast_s_edit title="Strafe bearbeiten">&#128393</button-->
+				<button id=btn_gast_strafe_0_b title="Strafe nullen">0</button>
+				<button id=btn_gast_strafe_2_b title="2 Minuten Strafe">2</button>
+				<button id=btn_gast_strafe_4_b title="2+2 Minuten Strafe">+2</button>
 			</div>
-		</div> 
+		</div>
+		<!-- OK s/-->
 		<hr/>
 		<div class="grid3b">
 			<button class=bigger id=zeit_play      title="Uhr starten">&#9205</button>
@@ -230,12 +224,12 @@
 			<button class=bigger id=zeit_ok        title=Speichern style=display:none>OK</button>
 			<button class=bigger id=btn_heim_s_ok  title=Speichern style=display:none>OK</button>
 			<button class=bigger id=btn_gast_s_ok  title=Speichern style=display:none>OK</button>
-			<button class=bigger id=btn_heim_s_ok2 title=Speichern style=display:none>OK</button>
-			<button class=bigger id=btn_gast_s_ok2 title=Speichern style=display:none>OK</button>
+			<button class=bigger id=btn_heim_s_ok_b title=Speichern style=display:none>OK</button>
+			<button class=bigger id=btn_gast_s_ok_b title=Speichern style=display:none>OK</button>
 		</div>
 		<div class="grid3a halt">
-			<button id=btn_uhr title="Öffne Uhr Anzeige">&#128337</button>
 			<button id=btn_count_down title="Öffne Countdown-Anzeige">&#9203</button>
+			<button id=btn_uhr title="Öffne Uhr Anzeige">&#128337</button>
 			<button id=btn_anleitung title="Anleitung">&#8505</button>
 			<button id=reset title="Reset" onclick=location.reload()>&#11119</button>
 		</div>
@@ -290,7 +284,7 @@
 						<strong>Zweck</strong><br />
 						Dieses HTML-ist dazu gedacht als Anzeige in einem Floorballspiel zu dienen.<br />
 						Es ist in der Lage Teamnamen, Tore, Zeit und bis zu zwei Strafen je Team anzuzeigen.<br />
-						Alternativ kann die Uhrzeit oder ein Countdown angezeigt werden.
+						Alternativ kann die Uhrzeit oder ein Countdown (Timeout / Drittelpause) angezeigt werden.
 					</p>
 					<hr />
 					<p>
@@ -312,35 +306,47 @@
 						<li>
 							<strong>Uhr</strong>
 							<ul>
-								<li>Starten: Klick auf Play (&#9654), oder Leerzeichen-Taste</li>
-								<li>Stoppen: Klick auf Stopp (&#9208), oder Leerzeichen-Taste</li>
+								<li>Starten: Klick auf Play (&#9654), oder Leerzeichen-Taste.</li>
+								<li>Stoppen: Klick auf Stopp (&#9208), oder Leerzeichen-Taste.</li>
 								<li>Manuelles Bearbeiten: Klick auf die Zeitanzeige. (Nur wenn die Uhr steht.)</li>
-								<li>Plus- und Minus-Buttons ver&auml;ndern jeweils die Zeit um eine Sekunde. (Strafen werden angepasst)</li>
+								<li>Plus- und Minus-Buttons ver&auml;ndern jeweils die Zeit um eine Sekunde. (Strafen werden angepasst.)</li>
 								<li>Null-Button setzt die Uhr auf 0. Strafenzeiten werden behalten. Gedacht beim Wechsel eines Spielabschnitts.</li>
 							</ul>
 						</li>
 						<li>
 							<strong>Strafen</strong>
 							<ul>
-								<li>Buttons &quot;0&quot;, &quot;2&quot; und &quot;4&quot; setzen die jeweilige Strafzeit auf entsprechende Anzahl Minuten.</li>
-								<!--li>Plus- und Minus-Buttons ver&auml;ndern jeweils die Strafzeit um eine Sekunde. (Sollte eigentlich nicht gebraucht werden)</li-->
-								<li>Manuelles Bearbeiten: Klick auf die Zeitanzeige. (Nur wenn die Uhr steht.)</li>
-								<li>Hinzuf&uuml;gen einer zweiten Reihe Strafanzeigen. (F&uuml;r: Gro&szlig;feld, wenn zwei Strafen gemessen werden.) &uuml;ber das Plus-Button unter den Strafen. &Uuml;ber den gleichen Button l&auml;sst sich die Anzeige wieder Entfernen.</li>
+								<li>Button (0) um aktuelle Strafe zu löschen.</li>
+								<li>Button (2) um aktuelle Strafe auf 2 Minuten zu setzen.</li>
+								<li>Button (+2) um aktuelle Strafe auf 2+2 Minuten zu setzen.</li>
+								<li>Button (+) bzw. (-) um eine zweite Reihe von Strafzeitmessung anzuzeigen  bzw. auszublenden. (F&uuml;r: Gro&szlig;feld)</li>
+								<li>Manuelles Bearbeiten: Klick auf die Zeitanzeige. (Nur wenn die Uhr steht. Sollte eigentlich nicht gebraucht werden.)</li>
 							</ul>
 						</li>
 						<li>
-							<strong>Overlays</strong>
+							<strong>Timeout und Pause</strong>
 							<ul>
-								<li>Es gibt Overlays für die Uhrzeit, einen Countdown und diese Bedienungsanleitung.
-								Angezeigt werden sie durch Klick auf (&#128337), (&#8987) und (&#10067).
-								Ausgeblendet wird ein Overlay durch Klick neben das Overlay oder Escape-Taste.
-								</li>
+								<li> Mit Klick auf (&#8987) offnet sich ein Overlay, der einen Countdown anzeigen kann.</li>
+								<li> Mit den Buttons der unteren Leiste lassen sich gänge Zeiten einstellen. Der Play-Button startet den Countdown.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Uhrzeit</strong>
+							<ul>
+								<li> Mit Klick auf (&#128337) offnet sich ein Overlay, der die Uhrzeit anzeigt.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Bedienungsanleitung</strong>
+							<ul>
+								<li> (&#8505) öffnet die Bedienungsanleitung.</li>
 							</ul>
 						</li>
 						<li>
 							<strong>Zur&uuml;cksetzen</strong>
 							<ul>
-								<li>Reset-Button (&#11118) rechts unten setzt alle Werte zur&uuml;ck.</li>
+								<li>Reset-Button (&#11119) rechts unten setzt alle Werte zur&uuml;ck.</li>
+								<li>Alternativ F5.</li>
 							</ul>
 						</li>
 					</ol>
@@ -352,8 +358,19 @@
 		</div>
 	</body>
 	<script>
+
+        //---------------------------------------------------------------------------
+		// HELPER
+		//---------------------------------------------------------------------------
+        function set_display_by_ID(ids,value){
+            for (const id of ids){
+                document.getElementById(id).style.display = value;
+            }
+		}
+
 		//---------------------------------------------------------------------------
 		//TEAMNAMEN SETZEN
+		//---------------------------------------------------------------------------
 		document.getElementById("heim_team").addEventListener("click", set_teams);
 		document.getElementById("gast_team").addEventListener("click", set_teams);
 		document.getElementById("team_namen_ok").addEventListener("click", set_teams_ok);
@@ -395,72 +412,68 @@
 			halt_fn();
 		}
 		//---------------------------------------------------------------------------
-
+		//TORE PLUS MINUS
 		//---------------------------------------------------------------------------
-		//TORE
 		let heim_tore = 0;
 		let gast_tore = 0;
 
-		document.getElementById("btn_heim_tore_minus")	.addEventListener("click", heim_minus_fn);
-		document.getElementById("btn_heim_tore_plus")	.addEventListener("click", heim_plus_fn);
-		document.getElementById("btn_gast_tore_minus")	.addEventListener("click", gast_minus_fn);
-		document.getElementById("btn_gast_tore_plus")	.addEventListener("click", gast_plus_fn);
+		document.getElementById("btn_heim_tore_minus")	.addEventListener("click", add_goal_fn.bind(null,"heim_tore",-1));
+		document.getElementById("btn_heim_tore_plus")	.addEventListener("click", add_goal_fn.bind(null,"heim_tore",+1));
+		document.getElementById("btn_gast_tore_minus")	.addEventListener("click", add_goal_fn.bind(null,"gast_tore",-1));
+		document.getElementById("btn_gast_tore_plus")	.addEventListener("click", add_goal_fn.bind(null,"gast_tore",+1));
 
-		function heim_minus_fn(){
-			document.getElementById("heim_tore").innerHTML = --heim_tore;
+		function add_goal_fn(tore_s,value){
+            tore   = heim_tore;
+            if(tore_s != "heim_tore")
+                tore = gast_tore;
+
+            if(tore + value >= 0)
+                tore = tore + value;
+
+            if(tore_s == "heim_tore")
+                heim_tore = tore;
+            else
+                gast_tore = tore;
+
+            document.getElementById(tore_s).innerHTML = tore;
 			document.activeElement.blur();
 		}
-		function heim_plus_fn(){
-			document.getElementById("heim_tore").innerHTML = ++heim_tore;
-			document.activeElement.blur();
-		}
-		function gast_minus_fn(){
-			document.getElementById("gast_tore").innerHTML = --gast_tore;
-			document.activeElement.blur();
-		}
-		function gast_plus_fn(){
-			document.getElementById("gast_tore").innerHTML = ++gast_tore;
-			document.activeElement.blur();
-		}
-		//---------------------------------------------------------------------------
 
 		//---------------------------------------------------------------------------
 		//CHANGE VISIBLITY WHEN RUNNING
+		//---------------------------------------------------------------------------
 		document.getElementById("zeit_play").addEventListener("click", run_fn);
 		document.getElementById("zeit_halt").addEventListener("click", halt_fn);
+
+		var text_field_names = ["heim_team","gast_team", "zeit", "heim_strafe", "gast_strafe"];
 
 		function run_fn(){
 			objs = document.getElementsByClassName("halt");
 			Array.from(objs).forEach(obj => {obj.style.visibility = "hidden"; });
 			document.getElementById("zeit_play").style.display = "none"; 
 			document.getElementById("zeit_halt").style.display = ""; 
-			
-			document.getElementById("heim_team").style.cursor = "default";
-			document.getElementById("gast_team").style.cursor = "default";
-			document.getElementById("zeit").style.cursor = "default";
-			document.getElementById("heim_strafe").style.cursor = "default";
-			document.getElementById("gast_strafe").style.cursor = "default";
+
+			for (const tf of text_field_names)
+                document.getElementById(tf).style.cursor = "default";
 			
 			document.activeElement.blur();
 		}
 
 		function halt_fn(){
-			objs = document.getElementsByClassName("halt");
+			objs = document.querySelectorAll(".halt, .halt_time");
 			Array.from(objs).forEach(obj => {obj.style.visibility = "visible"; });
 			document.getElementById("zeit_play").style.display = ""; 
 			document.getElementById("zeit_halt").style.display = "none"; 
-			
-			document.getElementById("heim_team").style.cursor = "pointer";
-			document.getElementById("gast_team").style.cursor = "pointer";
-			document.getElementById("zeit").style.cursor = "pointer";
-			document.getElementById("heim_strafe").style.cursor = "pointer";
-			document.getElementById("gast_strafe").style.cursor = "pointer";			
+
+			for (const tf of text_field_names)
+                document.getElementById(tf).style.cursor = "pointer";
 			
 			document.activeElement.blur();
 		}
 
 		//---------------------------------------------------------------------------
-		///HELPER
+		///TIME TEXT CONVERSION
+		//---------------------------------------------------------------------------
 		function zeit_zu_text(time){
 			let mm = time;
 			mm = Math.floor(mm / 100);
@@ -480,65 +493,76 @@
 		  	}
 		  	return out;
 		}
+		let SEK = 1000;
+		let MIN = 60*SEK;
 
 		//---------------------------------------------------------------------------
-		//ZEITSTEMPEL
+		//TIME STAMP
+		//---------------------------------------------------------------------------
 		let timer_start;
 		let time = 0;
 		let timer_iv;
+		let time_last_input;
 
-		//ZEIT FUNKTIONEN
-		document.getElementById("zeit_play").addEventListener("click", start_timer);
-		document.getElementById("zeit_halt").addEventListener("click", stop_timer);
-		document.getElementById("zeit_minus").addEventListener("click", sub_a_sec);
-		document.getElementById("zeit_plus").addEventListener("click", add_a_sec);
-		document.getElementById("zeit_0").addEventListener("click", reset_time);
-		document.getElementById("zeit").addEventListener("click", edit_time);
-		document.getElementById("zeit_ok").addEventListener("click", set_time);
+		document.addEventListener("mousemove", (event) => {time_last_input = Date.now();});
+
+        //---------------------------------------------------------------------------
+		//TIME LOGIC
+		//---------------------------------------------------------------------------
+		document.getElementById("zeit_play") .addEventListener("click", start_timer);
+		document.getElementById("zeit_halt") .addEventListener("click", stop_timer);
+		document.getElementById("zeit_minus").addEventListener("click", add_to_time.bind(null,-1*SEK));
+		document.getElementById("zeit_plus") .addEventListener("click", add_to_time.bind(null, 1*SEK));
+		document.getElementById("zeit_0")    .addEventListener("click", reset_time);
+		document.getElementById("zeit")      .addEventListener("click", edit_time);
+		document.getElementById("zeit_ok")   .addEventListener("click", set_time);
 
 		function zeige_zeit(){
 		  	document.getElementById("zeit").innerHTML = zeit_zu_text(time);
 		  	if( !(Math.floor(time / 100) % 10) ){
 		  		zeige_strafen();
-		  		zeige_strafen2();
+		  		zeige_strafen_b();
 		  	}
 		}
+
+		function my_update() {
+				time = Date.now() - timer_start;
+		  		zeige_zeit();
+		  		runntime = Date.now() - time_last_input;
+
+                objs = document.getElementsByClassName("halt_time");
+		  		if( runntime < 1500)
+                    Array.from(objs).forEach(obj => {obj.style.visibility = "visible"});
+		  		else
+                    Array.from(objs).forEach(obj => {obj.style.visibility = "hidden"});
+        }
 
 		function start_timer() {
 			zeige_zeit()
 			timer_start = Date.now() - time;
-			timer_iv = setInterval(
-			function update() {
-				time = Date.now() - timer_start;
-		  		zeige_zeit();
-		    	}, 50); //0.1 sec
+			time_last_input = Date.now();
+			timer_iv = setInterval(my_update, 50); //0.1 sec
 			document.activeElement.blur();
 		}
 
 		function stop_timer() {
 			clearInterval(timer_iv);
-			//time = Math.round(time / 1000) * 1000;
-			//zeige_zeit();
 			document.activeElement.blur();
 		}
 
-		function sub_a_sec(){
-			time = ( Math.ceil(time/1000) - 1) * 1000;
-			zeige_zeit();
-			document.activeElement.blur();
-		}
-
-		function add_a_sec(){
-			time = ( Math.floor(time/1000) + 1) * 1000;
+		function add_to_time(value){
+            time += value;
+            time = ( Math.floor(time/1000)) * 1000;
+			if(time < 0) time = 0;
 			zeige_zeit();
 			document.activeElement.blur();
 		}
 
 		function reset_time(){
 			//strafen behalten
-			if(heim_strafe_end>time) heim_strafe_end -=  time;
+			if(heim_strafe_end>time)  heim_strafe_end  -=  time;
 			if(heim_strafe_end2>time) heim_strafe_end2 -=  time;
-			if(gast_strafe_end>time) gast_strafe_end -=  time;
+			if(gast_strafe_end>time)  gast_strafe_end  -=  time;
 			if(gast_strafe_end2>time) gast_strafe_end2 -=  time;
 			time = 0;
 			zeige_zeit();
@@ -546,7 +570,8 @@
 		}
 
 		//---------------------------------------------------------------------------
-		//ZEIT BEARBEITEN
+		// EDIT TIME
+		//---------------------------------------------------------------------------
 		function edit_time(){
 			if(running() || edit() ) return;	
 			run_fn();
@@ -559,10 +584,8 @@
 
 		function set_time(){
 			time = text_zu_zeit(document.getElementById("zeit_in").value);
-			document.getElementById("zeit")		.style.display = "";
-			document.getElementById("zeit_halt")	.style.display = "";
-			document.getElementById("zeit_set")		.style.display = "none";
-			document.getElementById("zeit_ok")		.style.display = "none";
+			set_display_by_ID( ["zeit",  "zeit_halt"], ""     );
+			set_display_by_ID( ["zeit_set","zeit_ok"], "none" );
 			zeige_zeit();
 		  	zeige_strafen();
 		  	zeige_strafen2();
@@ -571,37 +594,52 @@
 
 		//---------------------------------------------------------------------------
 		//STRAFEN KONTROLLE
+		//---------------------------------------------------------------------------
 		let heim_strafe_end = 0;
 		let gast_strafe_end = 0;
-		let SEK = 1000;
-		let MIN = 60*SEK;
+		let heim_strafe_2 = false;
+		let gast_strafe_2 = false;
 
-		document.getElementById("btn_heim_strafe_0").addEventListener("click", function () { strafe_setzen(true,0*MIN); });
-		document.getElementById("btn_heim_strafe_2").addEventListener("click", function () { strafe_setzen(true,2*MIN); });
-		document.getElementById("btn_heim_strafe_4").addEventListener("click", function () { strafe_setzen(true,4*MIN); });
-		document.getElementById("btn_heim_strafe_plus").addEventListener("click", function () { strafe_hinzufuegen(true,1*SEK); });
-		document.getElementById("btn_heim_strafe_minus").addEventListener("click", function () { strafe_hinzufuegen(true,-1*SEK); });
+		document.getElementById("btn_heim_strafe_0")    .addEventListener("click", function () { strafe_setzen(true,0*MIN,false); });
+		document.getElementById("btn_heim_strafe_2")    .addEventListener("click", function () { strafe_setzen(true,2*MIN,false); });
+		document.getElementById("btn_heim_strafe_4")    .addEventListener("click", function () { strafe_setzen(true,2*MIN,true ); });
 
-		document.getElementById("btn_gast_strafe_0").addEventListener("click", function () { strafe_setzen(false,0*MIN); });
-		document.getElementById("btn_gast_strafe_2").addEventListener("click", function () { strafe_setzen(false,2*MIN); });
-		document.getElementById("btn_gast_strafe_4").addEventListener("click", function () { strafe_setzen(false,4*MIN); });
-		document.getElementById("btn_gast_strafe_plus").addEventListener("click", function () { strafe_hinzufuegen(false,1*SEK); });
-		document.getElementById("btn_gast_strafe_minus").addEventListener("click", function () { strafe_hinzufuegen(false,-1*SEK); });
+		document.getElementById("btn_gast_strafe_0")    .addEventListener("click", function () { strafe_setzen(false,0*MIN,false); });
+		document.getElementById("btn_gast_strafe_2")    .addEventListener("click", function () { strafe_setzen(false,2*MIN,false); });
+		document.getElementById("btn_gast_strafe_4")    .addEventListener("click", function () { strafe_setzen(false,2*MIN,true ); });
 
 		function zeige_strafe(heim, time){
-			let field = document.getElementById("heim_strafe");
+			let field       = document.getElementById("heim_strafe");
+			let plus_field  = document.getElementById("heim_strafe_plus");
+			let plus        = heim_strafe_2;
 			let anzeige = "00:00";
-			if(!heim) field = document.getElementById("gast_strafe");
+
+			if(!heim){
+                field       = document.getElementById("gast_strafe");
+                plus_field  = document.getElementById("gast_strafe_plus");
+                plus        = gast_strafe_2;
+			}
+
 			if(time > 0) anzeige = zeit_zu_text(time).split(".")[0];
 			else{
 				if(heim) heim_strafe_end = 0;
 				else gast_strafe_end = 0;
 			}
+
 			field.innerHTML = anzeige;
 			if(anzeige == "00:00" )
 				field.style.color = "#737373"; //gray
 			else
 				field.style.color = "#eb1000"; //red
+
+            if(plus)   plus_field.style.visibility = "";
+            else       plus_field.style.visibility = "hidden";
+
+
+
+			if(anzeige == "00:00" && plus){
+                strafe_setzen(heim,2*MIN+.9*SEK,false)
+			}
 		}
 
 		function zeige_strafen(){
@@ -609,53 +647,39 @@
 			zeige_strafe(false, gast_strafe_end - time);
 		}
 
-		function strafe_setzen(heim, s_time){
+		function strafe_setzen(heim, s_time, plus2){
 			if(heim){
 				heim_strafe_end = time + s_time;
+				heim_strafe_2 = plus2;
 			}else{
 				gast_strafe_end = time + s_time;
+				gast_strafe_2 = plus2;
 			}
 			zeige_strafe(heim,s_time);
 		}
 
-		function strafe_hinzufuegen(heim, s_time){
-			if(heim){
-				if(heim_strafe_end < time) heim_strafe_end = time;
-				heim_strafe_end += s_time;
-			}else{
-				if(gast_strafe_end < time) gast_strafe_end = time;
-				gast_strafe_end += s_time;
-			}
-			zeige_strafen(heim, s_time);	
-		}
-
 		//---------------------------------------------------------------------------
 		//STRAFZEIT BEARBEITEN
+		//---------------------------------------------------------------------------
 
-		document.getElementById("heim_strafe").addEventListener("click", heim_s_edit_time);
+		document.getElementById("heim_strafe")  .addEventListener("click", heim_s_edit_time);
 		document.getElementById("btn_heim_s_ok").addEventListener("click", heim_s_set_time);
-		document.getElementById("gast_strafe").addEventListener("click", gast_s_edit_time);
+		document.getElementById("gast_strafe")  .addEventListener("click", gast_s_edit_time);
 		document.getElementById("btn_gast_s_ok").addEventListener("click", gast_s_set_time);
 
 		function heim_s_edit_time(){
 			if(running() || edit() ) return;	
 			run_fn();
 			document.getElementById("heim_s_in").value = document.getElementById("heim_strafe").innerHTML;
-			document.getElementById("heim_strafe")		.style.display = "none";
-			//document.getElementById("btn_heim_s_edit")	.style.display = "none";
-			document.getElementById("zeit_halt")		.style.display = "none";
-			document.getElementById("heim_s_set")		.style.display = "";
-			document.getElementById("btn_heim_s_ok")		.style.display = "";
+			set_display_by_ID( ["heim_strafe","zeit_halt"], "none" );
+			set_display_by_ID( ["heim_s_set","btn_heim_s_ok"], "" );
 			document.activeElement.blur();
 		}
 
 		function heim_s_set_time(){
-			strafe_setzen(true, text_zu_zeit(document.getElementById("heim_s_in").value))	
-			document.getElementById("heim_strafe")		.style.display = "";
-			//document.getElementById("btn_heim_s_edit")	.style.display = "";
-			document.getElementById("zeit_halt")		.style.display = "";
-			document.getElementById("heim_s_set")		.style.display = "none";
-			document.getElementById("btn_heim_s_ok")		.style.display = "none";
+			strafe_setzen(true, text_zu_zeit(document.getElementById("heim_s_in").value), heim_strafe_2)
+			set_display_by_ID( ["heim_strafe","zeit_halt"], "" );
+			set_display_by_ID( ["heim_s_set","btn_heim_s_ok"], "none" );
 		  	halt_fn();
 			document.activeElement.blur();
 		}
@@ -663,136 +687,131 @@
 			if(running() || edit() ) return;	
 			run_fn();
 			document.getElementById("gast_s_in").value = document.getElementById("gast_strafe").innerHTML;
-			document.getElementById("gast_strafe")		.style.display = "none";
-			//document.getElementById("btn_gast_s_edit")	.style.display = "none";
-			document.getElementById("zeit_halt")		.style.display = "none";
-			document.getElementById("gast_s_set")		.style.display = "";
-			document.getElementById("btn_gast_s_ok")		.style.display = "";
+			set_display_by_ID( ["gast_strafe","zeit_halt"], "none" );
+			set_display_by_ID( ["gast_s_set","btn_gast_s_ok"], "" );
 			document.activeElement.blur();
 		}
 
 		function gast_s_set_time(){
-			strafe_setzen(false, text_zu_zeit(document.getElementById("gast_s_in").value))	
-			document.getElementById("gast_strafe")		.style.display = "";
-			//document.getElementById("btn_gast_s_edit")	.style.display = "";
-			document.getElementById("zeit_halt")		.style.display = "";
-			document.getElementById("gast_s_set")		.style.display = "none";
-			document.getElementById("btn_gast_s_ok")		.style.display = "none";
+			strafe_setzen(false, text_zu_zeit(document.getElementById("gast_s_in").value), gast_strafe_2)
+			set_display_by_ID( ["gast_strafe","zeit_halt"], "" );
+			set_display_by_ID( ["gast_s_set","btn_gast_s_ok"], "none" );
 		  	halt_fn();
 			document.activeElement.blur();
 		}
+
 		//---------------------------------------------------------------------------
-		//STRAFEN KONTROLLE 2
-		let heim_strafe_end2 = 0;
-		let gast_strafe_end2 = 0;
+		//STRAFEN KONTROLLE LEISTE B
+		//---------------------------------------------------------------------------
+		let heim_strafe_end_b = 0;
+		let gast_strafe_end_b = 0;
+		let heim_strafe_2_b = false;
+		let gast_strafe_2_b = false;
 
-		document.getElementById("btn_heim_strafe_02").addEventListener("click", function () { strafe_setzen2(true,0*MIN); });
-		document.getElementById("btn_heim_strafe_22").addEventListener("click", function () { strafe_setzen2(true,2*MIN); });
-		document.getElementById("btn_heim_strafe_42").addEventListener("click", function () { strafe_setzen2(true,4*MIN); });
-		document.getElementById("btn_heim_strafe_plus2").addEventListener("click", function () { strafe_hinzufuegen2(true,1*SEK); });
-		document.getElementById("btn_heim_strafe_minus2").addEventListener("click", function () { strafe_hinzufuegen2(true,-1*SEK); });
+		document.getElementById("btn_heim_strafe_0_b")    .addEventListener("click", function () { strafe_setzen_b(true,0*MIN,false); });
+		document.getElementById("btn_heim_strafe_2_b")    .addEventListener("click", function () { strafe_setzen_b(true,2*MIN,false); });
+		document.getElementById("btn_heim_strafe_4_b")    .addEventListener("click", function () { strafe_setzen_b(true,2*MIN,true ); });
 
-		document.getElementById("btn_gast_strafe_02").addEventListener("click", function () { strafe_setzen2(false,0*MIN); });
-		document.getElementById("btn_gast_strafe_22").addEventListener("click", function () { strafe_setzen2(false,2*MIN); });
-		document.getElementById("btn_gast_strafe_42").addEventListener("click", function () { strafe_setzen2(false,4*MIN); });
-		document.getElementById("btn_gast_strafe_plus2").addEventListener("click", function () { strafe_hinzufuegen2(false,1*SEK); });
-		document.getElementById("btn_gast_strafe_minus2").addEventListener("click", function () { strafe_hinzufuegen2(false,-1*SEK); });
+		document.getElementById("btn_gast_strafe_0_b")    .addEventListener("click", function () { strafe_setzen_b(false,0*MIN,false); });
+		document.getElementById("btn_gast_strafe_2_b")    .addEventListener("click", function () { strafe_setzen_b(false,2*MIN,false); });
+		document.getElementById("btn_gast_strafe_4_b")    .addEventListener("click", function () { strafe_setzen_b(false,2*MIN,true ); });
 
-		function zeige_strafe2(heim, time){
-			let field = document.getElementById("heim_strafe2");
+		function zeige_strafe_b(heim, time){
+			let field       = document.getElementById("heim_strafe_b");
+			let plus_field  = document.getElementById("heim_strafe_plus_b");
+			let plus        = heim_strafe_2_b;
 			let anzeige = "00:00";
-			if(!heim) field = document.getElementById("gast_strafe2");
+
+			if(!heim){
+                field       = document.getElementById("gast_strafe_b");
+                plus_field  = document.getElementById("gast_strafe_plus_b");
+                plus        = gast_strafe_2_b;
+			}
+
 			if(time > 0) anzeige = zeit_zu_text(time).split(".")[0];
 			else{
-				if(heim) heim_strafe_end2 = 0;
-				else gast_strafe_end2 = 0;
+				if(heim) heim_strafe_end_b = 0;
+				else     gast_strafe_end_b = 0;
 			}
+
 			field.innerHTML = anzeige;
 			if(anzeige == "00:00" )
 				field.style.color = "#737373"; //gray
 			else
 				field.style.color = "#eb1000"; //red
-		}
 
-		function zeige_strafen2(){
-			zeige_strafe2(true, heim_strafe_end2 - time);
-			zeige_strafe2(false, gast_strafe_end2 - time);
-		}
+            if(plus)   plus_field.style.visibility = "";
+            else       plus_field.style.visibility = "hidden";
 
-		function strafe_setzen2(heim, s_time){
-			if(heim){
-				heim_strafe_end2 = time + s_time;
-			}else{
-				gast_strafe_end2 = time + s_time;
+
+
+			if(anzeige == "00:00" && plus){
+                strafe_setzen_b(heim,2*MIN+.9*SEK,false)
 			}
-			zeige_strafe2(heim,s_time);
 		}
 
-		function strafe_hinzufuegen2(heim, s_time){
+		function zeige_strafen_b(){
+			zeige_strafe_b(true, heim_strafe_end_b - time);
+			zeige_strafe_b(false, gast_strafe_end_b - time);
+		}
+
+		function strafe_setzen_b(heim, s_time, plus2){
 			if(heim){
-				if(heim_strafe_end2 < time) heim_strafe_end2 = time;
-				heim_strafe_end2 += s_time;
+				heim_strafe_end_b = time + s_time;
+				heim_strafe_2_b = plus2;
 			}else{
-				if(gast_strafe_end2 < time) gast_strafe_end2 = time;
-				gast_strafe_end2 += s_time;
+				gast_strafe_end_b = time + s_time;
+				gast_strafe_2_b = plus2;
 			}
-			zeige_strafen2(heim, s_time);
+			zeige_strafe_b(heim,s_time);
 		}
 
 		//---------------------------------------------------------------------------
-		//STRAFZEIT BEARBEITEN 2
-		document.getElementById("heim_strafe2").addEventListener("click", heim_s_edit_time2);
-		document.getElementById("btn_heim_s_ok2").addEventListener("click", heim_s_set_time2);
-		document.getElementById("gast_strafe2").addEventListener("click", gast_s_edit_time2);
-		document.getElementById("btn_gast_s_ok2").addEventListener("click", gast_s_set_time2);
+		//STRAFZEIT BEARBEITEN LEISTE B
+		//---------------------------------------------------------------------------
 
-		function heim_s_edit_time2(){
-			if(running() || edit() ) return;	
+		document.getElementById("heim_strafe_b")  .addEventListener("click", heim_s_edit_time_b);
+		document.getElementById("btn_heim_s_ok_b").addEventListener("click", heim_s_set_time_b);
+		document.getElementById("gast_strafe_b")  .addEventListener("click", gast_s_edit_time_b);
+		document.getElementById("btn_gast_s_ok_b").addEventListener("click", gast_s_set_time_b);
+
+		function heim_s_edit_time_b(){
+			if(running() || edit() ) return;
 			run_fn();
-			document.getElementById("heim_s_in2").value = document.getElementById("heim_strafe2").innerHTML;
-			document.getElementById("heim_strafe2")		.style.display = "none";
-			//document.getElementById("btn_heim_s_edit")	.style.display = "none";
-			document.getElementById("zeit_halt")		.style.display = "none";
-			document.getElementById("heim_s_set2")		.style.display = "";
-			document.getElementById("btn_heim_s_ok2")		.style.display = "";
+			document.getElementById("heim_s_in_b").value = document.getElementById("heim_strafe_b").innerHTML;
+			set_display_by_ID( ["heim_strafe_b","zeit_halt_b"], "none" );
+			set_display_by_ID( ["heim_s_set_b","btn_heim_s_ok_b"], "" );
 			document.activeElement.blur();
 		}
 
-		function heim_s_set_time2(){
-			strafe_setzen2(true, text_zu_zeit(document.getElementById("heim_s_in2").value))	
-			document.getElementById("heim_strafe2")		.style.display = "";
-			//document.getElementById("btn_heim_s_edit")	.style.display = "";
-			document.getElementById("zeit_halt")		.style.display = "";
-			document.getElementById("heim_s_set2")		.style.display = "none";
-			document.getElementById("btn_heim_s_ok2")		.style.display = "none";
+		function heim_s_set_time_b(){
+			strafe_setzen_b(true, text_zu_zeit(document.getElementById("heim_s_in_b").value),heim_strafe_2_b)
+			set_display_by_ID( ["heim_strafe_b","zeit_halt_b"], "" );
+			set_display_by_ID( ["heim_s_set_b","btn_heim_s_ok_b"], "none" );
 		  	halt_fn();
 			document.activeElement.blur();
 		}
 
-		function gast_s_edit_time2(){
-			if(running() || edit() ) return;	
+		function gast_s_edit_time_b(){
+			if(running() || edit() ) return;
 			run_fn();
-			document.getElementById("gast_s_in2").value = document.getElementById("gast_strafe2").innerHTML;
-			document.getElementById("gast_strafe2")		.style.display = "none";
-			//document.getElementById("btn_gast_s_edit")	.style.display = "none";
-			document.getElementById("zeit_halt")		.style.display = "none";
-			document.getElementById("gast_s_set2")		.style.display = "";
-			document.getElementById("btn_gast_s_ok2")		.style.display = "";
+			document.getElementById("gast_s_in_b").value = document.getElementById("gast_strafe_b").innerHTML;
+			set_display_by_ID( ["gast_strafe_b","zeit_halt_b"], "none" );
+			set_display_by_ID( ["gast_s_set_b","btn_gast_s_ok_b"], "" );
 			document.activeElement.blur();
 		}
 
-		function gast_s_set_time2(){
-			strafe_setzen2(false, text_zu_zeit(document.getElementById("gast_s_in2").value))	
-			document.getElementById("gast_strafe2")		.style.display = "";
-			//document.getElementById("btn_gast_s_edit")	.style.display = "";
-			document.getElementById("zeit_halt")		.style.display = "";
-			document.getElementById("gast_s_set2")		.style.display = "none";
-			document.getElementById("btn_gast_s_ok2")		.style.display = "none";
+		function gast_s_set_time_b(){
+			strafe_setzen_b(false, text_zu_zeit(document.getElementById("gast_s_in_b").value),gast_strafe_2_b)
+			set_display_by_ID( ["gast_strafe_b","zeit_halt_b"], "" );
+			set_display_by_ID( ["gast_s_set_b","btn_gast_s_ok_b"], "none" );
 		  	halt_fn();
 			document.activeElement.blur();
 		}
+
 		//---------------------------------------------------------------------------
 		//COUNT_DOWN
+		//---------------------------------------------------------------------------
 		let cd_time = 30*SEK;
 		let cd_timer_iv;
 		let cd_running = false;
@@ -847,6 +866,8 @@
 
 		//---------------------------------------------------------------------------
 		//COUNT_DOWN BEARBEITEN
+		//---------------------------------------------------------------------------
+
 		document.getElementById("cd_zeit").addEventListener("click", edit_cd_time);
 		document.getElementById("cd_ok").addEventListener("click", set_cd_time);
 
@@ -880,7 +901,9 @@
 			document.activeElement.blur();
 		}
 		//---------------------------------------------------------------------------
-		//UHRZEIT
+		// CLOCK
+		//---------------------------------------------------------------------------
+
 		let uhrzeit_iv;
 		let uhrzeit_offset = 0;
 
@@ -923,8 +946,11 @@
 			uhrzeit_offset = uhrzeit_offset + min*60*SEK;
 			zeige_uhrzeit(Date.now() - new Date().getTimezoneOffset() * 60000)
 		}
+
 		//---------------------------------------------------------------------------
 		//ANLEITUNG
+		//---------------------------------------------------------------------------
+
 		document.getElementById("btn_anleitung").addEventListener("click", anleitung_fn);
 		function anleitung_fn(){
 			if(window.getComputedStyle(document.getElementById("anleitung")).display === "none")
@@ -933,8 +959,11 @@
 				document.getElementById("anleitung").style.display = "none";
 			document.activeElement.blur();
 		}
-		//--------------------------------------------------------------------------------
-		//KEYS
+
+		//---------------------------------------------------------------------------
+		//KEYBOARD INPUT
+		//---------------------------------------------------------------------------
+
 		function running(){
 			return !(window.getComputedStyle(document.getElementById("zeit_halt")).display === "none");
 		}
@@ -945,6 +974,7 @@
 			return !(running() || halting());
 		}
 		document.body.onkeyup = function(e) {
+		time_last_input = Date.now();
 			if (e.key == " ") {
 				if(!(window.getComputedStyle(document.getElementById("count_down")).display === "none")){
 					if(!cd_running) start_cd_timer();
@@ -961,7 +991,7 @@
 		  		}
 			}
 			else if (e.key === 'Enter' || e.keyCode === 13) {
-				var items = ["team_namen_ok","zeit_ok", "btn_heim_s_ok", "btn_gast_s_ok", "btn_heim_s_ok2", "btn_gast_s_ok2", "cd_ok"  ];
+				var items = ["team_namen_ok","zeit_ok", "btn_heim_s_ok", "btn_gast_s_ok", "btn_heim_s_ok_b", "btn_gast_s_ok_b", "cd_ok"  ];
 				for (const i of items) { 
 					var btn = document.getElementById(i);
 					if (!(window.getComputedStyle(btn).display === "none")) {
