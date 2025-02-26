@@ -1,9 +1,13 @@
 # FANTA (Floorball-Anzeigen-Tafel)
-
 ## Zweck
 Dieses HTML ist dazu gedacht als Anzeige in einem Floorballspiel zu dienen.
 Es ist in der Lage Teamnamen, Spielstand, Zeit und bis zu zwei Strafen je Team anzuzeigen.
 Alternativ kann die Uhrzeit oder ein Countdown (Timeout / Drittelpause) angezeigt werden.
+
+---
+## Installation
+Die Datei `fanta.html` herunterladen und mit einem Webbrowser öffnen.
+
 ---
 ## Bedienung
 - **Teamnamen:** Per Klick auf die Namen, lassen sich die Teamnamen eintragen. Bestätigung mit "OK" oder Enter-Taste. (Nur wenn die Uhr steht.)
