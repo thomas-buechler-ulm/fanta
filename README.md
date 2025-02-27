@@ -1,4 +1,7 @@
 # FANTA (Floorball-Anzeigen-Tafel)
+
+![Alt text](/fanta.png?raw=true "Screenshot")
+
 ## Zweck
 Dieses HTML ist dazu gedacht als Anzeige in einem Floorballspiel zu dienen.
 Es ist in der Lage Teamnamen, Spielstand, Zeit und bis zu zwei Strafen je Team anzuzeigen.
